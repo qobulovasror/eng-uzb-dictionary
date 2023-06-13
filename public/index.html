@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>English-Uzbek Dictionary</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+
+<body>
+  <div class="container mt-5">
+    <a href="/document.html" class="text-center fs-5 mb-4">Documentation</a>
+    <h1 class="text-center mb-4">English-Uzbek Dictionary</h1>
+    <div class="row">
+      <div class="col-md-6 mb-4">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Search Word</h5>
+            <form id="searchForm">
+              <div class="mb-3">
+                <label for="searchInput" class="form-label">Enter a word</label>
+                <input type="text" class="form-control" id="searchInput" required>
+              </div>
+              <button type="submit" class="btn btn-primary">Search</button>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 mb-4">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Search Result</h5>
+            <div id="searchResult"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    const searchForm = document.getElementById('searchForm');
+    const searchInput = document.getElementById('searchInput');
+    const searchResult = document.getElementById('searchResult');
+
+    searchForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      searchResult.innerHTML = '';
+
+      const word = searchInput.value.trim();
+      if (word === '') return;
+
+      try {
+        const response = await fetch(`/api/words/${encodeURIComponent(word)}`);
+        const data = await response.json();
+
+        if (response.ok) {
+            if(data !==[]){
+                let words = data.map(item=>{
+                    return `
+                        <li>
+                            <p><strong>Word:</strong> ${item.eng}</p>
+                            <p><strong>Translation:</strong> ${item.uzb}</p>    
+                        </li>
+                    `
+                });
+                searchResult.innerHTML = `<ul>${words}</ul>`;
+            }
+        //   if (data.word && data.translation) {
+        //     searchResult.innerHTML = `
+        //       <p><strong>Word:</strong> ${data.word}</p>
+        //       <p><strong>Translation:</strong> ${data.translation}</p>
+        //     `;
+        //   } 
+          else {
+            searchResult.innerHTML = '<p>No results found.</p>';
+          }
+
+
+        } else {
+          searchResult.innerHTML = '<p>An error occurred while fetching the word.</p>';
+        }
+      } catch (error) {
+        searchResult.innerHTML = '<p>An error occurred while fetching the word.</p>';
+      }
+    });
+  </script>
+</body>
+
+</html>
+
