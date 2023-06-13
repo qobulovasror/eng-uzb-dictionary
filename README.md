@@ -19,7 +19,6 @@ To get started with the Uzbek Dictionary Backend, follow these steps:
 ### Prerequisites
 
 - Node.js installed on your machine
-- MongoDB installed and running
 
 ### Installation
 
@@ -34,5 +33,5 @@ To get started with the Uzbek Dictionary Backend, follow these steps:
   ```
 3. Run app
   ```bash
-  npm run dev  OR  npm start
+  npm start
   ```
