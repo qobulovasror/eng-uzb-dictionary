@@ -27,11 +27,48 @@ To get started with the Uzbek Dictionary Backend, follow these steps:
    ```bash
    git clone https://github.com/qobulovasror/eng-uzb-dictionary.git
    ```
-2. Installation dependencies
-  ```bash
-  npm install 
-  ```
-3. Run app
-  ```bash
-  npm start
-  ```
+2. Installation dependencies:
+   ```bash
+   npm install 
+   ```
+
+3. Run app:
+
+   ```bash
+   npm start 
+   ```
+
+## How to use api
+1. Get all words  
+   - Returns a list of all available words and their translations in the English-Uzbek dictionary
+   - Method: GET
+   - API Endpoint
+   ```bash
+   /api/words
+   ```
+   - Response
+   ```bash
+   [
+      {
+         "eng" : "words",
+         "uzb" : "so'zlar"
+      },
+      ....
+   ]
+2. Get a single word translation   
+   - Returns the translation of the specified English word in Uzbek
+   - Method: GET
+   - Parameters: `:name` (string, required): The English word to search for
+   - API Endpoint
+   ```bash
+   /api/words/:name
+   ```
+   - Response
+   ```bash
+   [
+      {
+         "eng": "hello",
+         "uzb": "salom"
+      }
+   ]
+   ```
